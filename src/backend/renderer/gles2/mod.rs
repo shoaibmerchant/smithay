@@ -471,9 +471,9 @@ impl Gles2Renderer {
                 ]));
             }
             // required for buffers without linear memory layout
-            if gl_version < version::GLES_3_0 && !exts.iter().any(|ext| ext == "GL_EXT_unpack_subimage") {
-                return Err(Gles2Error::GLExtensionNotSupported(&["GL_EXT_unpack_subimage"]));
-            }
+            // if gl_version < version::GLES_3_0 && !exts.iter().any(|ext| ext == "GL_EXT_unpack_subimage") {
+            //     return Err(Gles2Error::GLExtensionNotSupported(&["GL_EXT_unpack_subimage"]));
+            // }
 
             let logger = if exts.iter().any(|ext| ext == "GL_KHR_debug") {
                 let logger = Box::into_raw(Box::new(log.clone()));

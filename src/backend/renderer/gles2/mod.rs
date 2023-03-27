@@ -832,9 +832,9 @@ impl Gles2Renderer {
                 ]));
             }
             // required for buffers without linear memory layout
-            if gl_version < version::GLES_3_0 && !exts.iter().any(|ext| ext == "GL_EXT_unpack_subimage") {
-                return Err(Gles2Error::GLExtensionNotSupported(&["GL_EXT_unpack_subimage"]));
-            }
+            // if gl_version < version::GLES_3_0 && !exts.iter().any(|ext| ext == "GL_EXT_unpack_subimage") {
+            //     return Err(Gles2Error::GLExtensionNotSupported(&["GL_EXT_unpack_subimage"]));
+            // }
             // Check if GPU supports instanced rendering.
             let supports_instancing = gl_version >= version::GLES_3_0
                 || (exts.iter().any(|ext| ext == "GL_EXT_instanced_arrays")

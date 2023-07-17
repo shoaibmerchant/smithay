@@ -19,7 +19,7 @@ use crate::{
     utils::user_data::UserDataMap,
 };
 
-use tracing::{info, info_span, instrument, trace};
+use tracing::{info, info_span, debug, instrument, trace};
 
 /// EGL context for rendering
 #[derive(Debug)]
@@ -448,22 +448,22 @@ impl PixelFormatRequirements {
         if let Some(hardware_accelerated) = self.hardware_accelerated {
             out.push(ffi::egl::CONFIG_CAVEAT as c_int);
             out.push(if hardware_accelerated {
-                trace!("Setting CONFIG_CAVEAT to NONE");
+                debug!("Setting CONFIG_CAVEAT to NONE");
                 ffi::egl::NONE as c_int
             } else {
-                trace!("Setting CONFIG_CAVEAT to SLOW_CONFIG");
+                debug!("Setting CONFIG_CAVEAT to SLOW_CONFIG");
                 ffi::egl::SLOW_CONFIG as c_int
             });
         }
 
         if let Some(color) = self.color_bits {
-            trace!("Setting RED_SIZE to {}", color / 3);
+            debug!("Setting RED_SIZE to {}", color / 3);
             out.push(ffi::egl::RED_SIZE as c_int);
             out.push((color / 3) as c_int);
-            trace!("Setting GREEN_SIZE to {}", color / 3 + u8::from(color % 3 != 0));
+            debug!("Setting GREEN_SIZE to {}", color / 3 + u8::from(color % 3 != 0));
             out.push(ffi::egl::GREEN_SIZE as c_int);
             out.push((color / 3 + u8::from(color % 3 != 0)) as c_int);
-            trace!("Setting BLUE_SIZE to {}", color / 3 + u8::from(color % 3 == 2));
+            debug!("Setting BLUE_SIZE to {}", color / 3 + u8::from(color % 3 == 2));
             out.push(ffi::egl::BLUE_SIZE as c_int);
             out.push((color / 3 + u8::from(color % 3 == 2)) as c_int);
         }
@@ -474,25 +474,25 @@ impl PixelFormatRequirements {
         }
 
         if let Some(alpha) = self.alpha_bits {
-            trace!("Setting ALPHA_SIZE to {}", alpha);
+            debug!("Setting ALPHA_SIZE to {}", alpha);
             out.push(ffi::egl::ALPHA_SIZE as c_int);
             out.push(alpha as c_int);
         }
 
         if let Some(depth) = self.depth_bits {
-            trace!("Setting DEPTH_SIZE to {}", depth);
+            debug!("Setting DEPTH_SIZE to {}", depth);
             out.push(ffi::egl::DEPTH_SIZE as c_int);
             out.push(depth as c_int);
         }
 
         if let Some(stencil) = self.stencil_bits {
-            trace!("Setting STENCIL_SIZE to {}", stencil);
+            debug!("Setting STENCIL_SIZE to {}", stencil);
             out.push(ffi::egl::STENCIL_SIZE as c_int);
             out.push(stencil as c_int);
         }
 
         if let Some(multisampling) = self.multisampling {
-            trace!("Setting SAMPLES to {}", multisampling);
+            debug!("Setting SAMPLES to {}", multisampling);
             out.push(ffi::egl::SAMPLES as c_int);
             out.push(multisampling as c_int);
         }

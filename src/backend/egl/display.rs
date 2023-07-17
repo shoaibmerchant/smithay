@@ -328,12 +328,12 @@ impl EGLDisplay {
             let mut out: Vec<c_int> = Vec::with_capacity(37);
 
             if self.egl_version >= (1, 2) {
-                trace!("Setting COLOR_BUFFER_TYPE to RGB_BUFFER");
+                debug!("Setting COLOR_BUFFER_TYPE to RGB_BUFFER");
                 out.push(ffi::egl::COLOR_BUFFER_TYPE as c_int);
                 out.push(ffi::egl::RGB_BUFFER as c_int);
             }
 
-            trace!("Setting SURFACE_TYPE to {}", self.surface_type);
+            debug!("Setting SURFACE_TYPE to {}", self.surface_type);
 
             out.push(ffi::egl::SURFACE_TYPE as c_int);
             out.push(self.surface_type);
@@ -341,13 +341,13 @@ impl EGLDisplay {
             match attributes.version {
                 (3, _) => {
                     if self.egl_version < (1, 3) {
-                        error!("OpenglES 3.* is not supported on EGL Versions lower then 1.3");
+                        debug!("OpenglES 3.* is not supported on EGL Versions lower then 1.3");
                         return Err(Error::NoAvailablePixelFormat);
                     }
-                    trace!("Setting RENDERABLE_TYPE to OPENGL_ES3");
+                    debug!("Setting RENDERABLE_TYPE to OPENGL_ES3");
                     out.push(ffi::egl::RENDERABLE_TYPE as c_int);
                     out.push(ffi::egl::OPENGL_ES3_BIT as c_int);
-                    trace!("Setting CONFORMANT to OPENGL_ES3");
+                    debug!("Setting CONFORMANT to OPENGL_ES3");
                     out.push(ffi::egl::CONFORMANT as c_int);
                     out.push(ffi::egl::OPENGL_ES3_BIT as c_int);
                 }
@@ -356,10 +356,10 @@ impl EGLDisplay {
                         error!("OpenglES 2.* is not supported on EGL Versions lower then 1.3");
                         return Err(Error::NoAvailablePixelFormat);
                     }
-                    trace!("Setting RENDERABLE_TYPE to OPENGL_ES2");
+                    debug!("Setting RENDERABLE_TYPE to OPENGL_ES2");
                     out.push(ffi::egl::RENDERABLE_TYPE as c_int);
                     out.push(ffi::egl::OPENGL_ES2_BIT as c_int);
-                    trace!("Setting CONFORMANT to OPENGL_ES2");
+                    debug!("Setting CONFORMANT to OPENGL_ES2");
                     out.push(ffi::egl::CONFORMANT as c_int);
                     out.push(ffi::egl::OPENGL_ES2_BIT as c_int);
                 }
@@ -373,7 +373,7 @@ impl EGLDisplay {
             out
         };
 
-        debug!("Choose available configs | attribute_list - {:?}", descriptor);
+        debug!("Choose available configs | attributes - {:?} | attribute_list - {:?}", attributes, descriptor);
 
         // Try to find configs that match out criteria
         let mut num_configs = 0;

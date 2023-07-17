@@ -468,10 +468,10 @@ impl PixelFormatRequirements {
             out.push((color / 3 + u8::from(color % 3 == 2)) as c_int);
         }
 
-        if self.float_color_buffer {
-            out.push(ffi::egl::COLOR_COMPONENT_TYPE_EXT as c_int);
-            out.push(ffi::egl::COLOR_COMPONENT_TYPE_FLOAT_EXT as c_int);
-        }
+        // if self.float_color_buffer {
+        //     out.push(ffi::egl::COLOR_COMPONENT_TYPE_EXT as c_int);
+        //     out.push(ffi::egl::COLOR_COMPONENT_TYPE_FLOAT_EXT as c_int);
+        // }
 
         if let Some(alpha) = self.alpha_bits {
             debug!("Setting ALPHA_SIZE to {}", alpha);

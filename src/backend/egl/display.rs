@@ -269,7 +269,7 @@ impl EGLDisplay {
             out
         };
 
-        debug!("Choose available configs | attributes - {:?} | attribute_list - {:?}", attributes, descriptor);
+        println!("Choose available configs | attributes - {:?} | attribute_list - {:?}", attributes, descriptor);
 
         // Try to find configs that match out criteria
         let mut num_configs = 0;

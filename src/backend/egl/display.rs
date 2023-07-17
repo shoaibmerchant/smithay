@@ -386,6 +386,7 @@ impl EGLDisplay {
         })
         .map_err(Error::ConfigFailed)?;
         if num_configs == 0 {
+            error!("Number of configs is 0");
             return Err(Error::NoAvailablePixelFormat);
         }
 
@@ -405,6 +406,7 @@ impl EGLDisplay {
         }
 
         if config_ids.is_empty() {
+            error!("Config ids are empty");
             return Err(Error::NoAvailablePixelFormat);
         }
 

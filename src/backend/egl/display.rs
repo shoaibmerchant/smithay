@@ -373,6 +373,8 @@ impl EGLDisplay {
             out
         };
 
+        debug!("Choose available configs | attribute_list - {:?}", descriptor);
+
         // Try to find configs that match out criteria
         let mut num_configs = 0;
         wrap_egl_call_bool(|| unsafe {
